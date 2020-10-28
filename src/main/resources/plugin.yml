@@ -1,0 +1,7 @@
+name: Pog
+main: io.github.catmaniscatlord.pog.Pog
+version: ${version}
+commands:
+  pog:
+    description: says pog
+    usage: /pog [player] <message> 
