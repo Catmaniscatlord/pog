@@ -12,7 +12,24 @@ import org.bukkit.ChatColor;
 
 public class PogCommand implements CommandExecutor{
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        PogMessage pog = new PogMessage(sender , args[0], Arrays.copyOfRange(args, 1 ,args.length), true, true);   
+        String target;
+        String[] message;
+
+        switch (args.length) {
+            case 0:
+                target = null;
+                message = null;
+                break;
+            case 1:
+                target = args[0];
+                message = null;
+                break;
+            default:
+                target = args[0];
+                message = Arrays.copyOfRange(args, 1 ,args.length);
+        }
+
+        PogMessage pog = new PogMessage(sender , target, message, true, true);   
         pog.loop();
         return true;
     }

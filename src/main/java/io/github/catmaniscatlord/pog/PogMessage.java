@@ -9,7 +9,7 @@ public class PogMessage{
     private CommandSender sender;
     private String target;
     private String message = "";
-    private String userMessage;
+    private String userMessage = "";
     private boolean broadcast;
     private boolean targetIsPlayer;
     private boolean userRun;
@@ -47,12 +47,15 @@ public class PogMessage{
             else {
                 this.message += ChatColor.AQUA + this.sender.getName() + " " + ChatColor.RESET;
             }
-            this.message += "has pogged "+ ChatColor.AQUA + this.target + ChatColor.RESET + "\n";
+            this.message += "has pogged "+ ChatColor.AQUA + this.target + ChatColor.RESET;
         }
         else {
             this.message += ChatColor.GOLD + "Pog" + ChatColor.RESET;
         }
-        this.message += ChatColor.BLUE + this.userMessage + ChatColor.RESET;
+        if(!this.userMessage.isBlank()) {
+            this.message +=  "\n" + ChatColor.BLUE + this.userMessage + ChatColor.RESET;
+        }
+
     }
     
     /**
@@ -71,11 +74,16 @@ public class PogMessage{
      * @param target the target
      */
     public void setTarget(String target) {
-        if(Bukkit.getPlayer(target) != null)
-        {
-            this.targetIsPlayer = true;
+        if(target != null) {
+            if(Bukkit.getPlayer(target) != null)
+            {
+                this.targetIsPlayer = true;
+            }
+            this.target = target;
         }
-        this.target = target;
+        else {
+            this.target = "";
+        }   
     }
 
     /**
@@ -94,13 +102,17 @@ public class PogMessage{
      * @param message the message in a string array
      */
     public void setUserMessage(String[] userMessage) {
-        if(userMessage == null)
-        for(String i : userMessage)
-        {
-            this.userMessage += i + " ";
+        if(userMessage != null) {
+            for(String i : userMessage)
+            {
+                this.userMessage += i + " ";
+            }
+            this.userMessage.trim();
+            colorMessage();
         }
-        this.userMessage.trim();
-        colorMessage();
+        else {
+            this.userMessage = "";
+        }
     }
 
     /**
