@@ -25,6 +25,10 @@ public class PogMessage{
     public void loop()
     {
         createMessage();
+        if (this.targetIsPlayer) {
+            Player target = Bukkit.getPlayer(this.target);
+            target.sendMessage(ChatColor.GOLD + "You have been pogged" + ChatColor.RESET);
+        }
         if (this.broadcast) {
             Bukkit.broadcastMessage(this.message);
         }
@@ -55,7 +59,6 @@ public class PogMessage{
         if(!this.userMessage.isBlank()) {
             this.message +=  "\n" + ChatColor.BLUE + this.userMessage + ChatColor.RESET;
         }
-
     }
     
     /**
