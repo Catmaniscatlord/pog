@@ -31,6 +31,7 @@ public class PogCommand implements CommandExecutor{
 
         PogMessage pog = new PogMessage(sender , target, message, true, true);   
         pog.loop();
+        pog = null;
         return true;
     }
 }

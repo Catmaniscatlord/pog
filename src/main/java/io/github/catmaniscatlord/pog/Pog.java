@@ -9,6 +9,7 @@ public class Pog extends JavaPlugin {
     @Override
     public void onEnable() {
         getCommand("pog").setExecutor(new PogCommand());
+        getServer().getPluginManager().registerEvents(new PogListener(),this);
     }
 
     @Override

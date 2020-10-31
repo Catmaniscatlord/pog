@@ -22,29 +22,42 @@ public class PogMessage{
         this.userRun = userRun; 
     }
 
+    public PogMessage(CommandSender sender, String target, String userMessage, boolean broadcast, boolean userRun) {
+        this.sender = sender;
+        setTarget(target);
+        setUserMessage(userMessage);
+        this.broadcast = broadcast;
+        this.userRun = userRun; 
+    }
+
     public void loop()
     {
-        createMessage();
-        if (this.targetIsPlayer) {
-            Player target = Bukkit.getPlayer(this.target);
-            target.sendMessage(ChatColor.GOLD + "You have been pogged" + ChatColor.RESET);
+        if(this.message.isBlank()) { 
+            createMessage();
         }
         if (this.broadcast) {
             Bukkit.broadcastMessage(this.message);
         }
         else {
-            if(userRun) {
+            if(this.userRun) {
+                if (this.targetIsPlayer) {
+                    Player target = Bukkit.getPlayer(this.target);
+                    target.sendMessage(this.message);
+                    target.sendMessage(ChatColor.GOLD + "You have been pogged" + ChatColor.RESET);
+                }
                 this.sender.sendMessage(this.message);
             }
-            if (this.targetIsPlayer) {
-                Player target = Bukkit.getPlayer(this.target);
-                target.sendMessage(this.message);
+            else {
+                if (this.targetIsPlayer) {
+                    Player target = Bukkit.getPlayer(this.target);
+                    target.sendMessage(this.message);
+                }
             }
         }
     }
 
     private void createMessage() {
-        if(userRun) {
+        if(this.userRun) {
             if(!(this.sender instanceof Player)) {
                 this.message += ChatColor.AQUA + "The Server " + ChatColor.RESET;
             }
@@ -57,7 +70,7 @@ public class PogMessage{
             this.message += ChatColor.GOLD + "Pog" + ChatColor.RESET;
         }
         if(!this.userMessage.isBlank()) {
-            this.message +=  "\n" + ChatColor.BLUE + this.userMessage + ChatColor.RESET;
+            this.message +=  "\n" + this.userMessage + ChatColor.RESET;
         }
     }
     
@@ -125,5 +138,10 @@ public class PogMessage{
      */
     public void setBroadcast(boolean broadcast) {
         this.broadcast = broadcast;
+    }
+
+    public void setMessage(String message)
+    {
+        this.message = message;
     }
 }
