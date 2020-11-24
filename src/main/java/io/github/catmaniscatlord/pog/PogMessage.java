@@ -37,14 +37,13 @@ public class PogMessage{
         }
         if (this.broadcast) {
             Bukkit.broadcastMessage(this.message);
+            if (this.targetIsPlayer) {
+                Player target = Bukkit.getPlayer(this.target);
+                target.sendMessage(ChatColor.GOLD + "You have been pogged" + ChatColor.RESET);
+            }
         }
         else {
             if(this.userRun) {
-                if (this.targetIsPlayer) {
-                    Player target = Bukkit.getPlayer(this.target);
-                    target.sendMessage(this.message);
-                    target.sendMessage(ChatColor.GOLD + "You have been pogged" + ChatColor.RESET);
-                }
                 this.sender.sendMessage(this.message);
             }
             else {
@@ -58,7 +57,8 @@ public class PogMessage{
 
     private void createMessage() {
         if(this.userRun) {
-            if(!(this.sender instanceof Player)) {
+            if(!(this.sender instanceof Player)) 
+            {
                 this.message += ChatColor.AQUA + "The Server " + ChatColor.RESET;
             }
             else {
